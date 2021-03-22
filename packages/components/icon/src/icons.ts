@@ -16,6 +16,10 @@ import { InfoCircle } from '../definitions/infoCircle'
 import { ExclamationCircle } from '../definitions/exclamationCircle'
 import { Star } from '../definitions/star'
 import { VerticalAlignTop } from '../definitions/verticalAlignTop'
+import { Check } from '../definitions/check'
+import { User } from '../definitions/user'
+import { Verified } from '../definitions/verified'
+import { Smile } from '../definitions/smile'
 
 export const innerStaticIcons: IconDefinition[] = [
   Up,
@@ -35,4 +39,8 @@ export const innerStaticIcons: IconDefinition[] = [
   ExclamationCircle,
   Star,
   VerticalAlignTop,
+  Check,
+  User,
+  Verified,
+  Smile,
 ]

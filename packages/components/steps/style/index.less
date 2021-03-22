@@ -1,0 +1,197 @@
+@import '../../style/default.less';
+
+@steps-prefix: ~'@{idux-prefix}-steps';
+@step-prefix: ~'@{idux-prefix}-step';
+
+.@{steps-prefix} {
+  display: flex;
+  padding: @spacing-gutter;
+}
+
+.@{step-prefix} {
+  display: inline-block;
+  flex: 1;
+  font-size: @font-size-md;
+  &:not(:first-child) {
+    padding-left: @padding-md;
+  } 
+  &:not(:last-child) {
+    .@{step-prefix}-title:after {
+      position: absolute;
+      display: block;
+      left: 100%;
+      width: @step-tail-width;
+      height: @step-tail-height;
+      background: @grey;
+      content: "";
+    }
+  }
+  &-head {
+    position: relative;
+    display: inline-block;
+    width: @height-md;
+    height: @height-md;
+    border-radius: 50%;
+    border: 1px solid @grey;
+    text-align: center;
+    color: @grey;
+    &-icon, &-text {
+     line-height: @height-md;
+    }
+  }  
+  &-content {
+    display: inline-block;
+    margin-left: @spacing-gutter;    
+    width: calc(100% - @height-md - @spacing-gutter);
+    overflow: hidden;
+    color: @grey;
+    .@{step-prefix}-title {
+      display: inline-block;
+      position: relative;
+      line-height: @height-md;
+      padding-right: @padding-md;
+      &:after {
+        top: (@height-md / 2);
+      }
+      .@{step-prefix}-subtitle {
+        margin-left: @spacing-gutter;
+      }
+    }
+    .@{step-prefix}-description {
+      font-size: @font-size-sm;
+    }
+  }
+  &-head, &-content {
+    vertical-align: top;
+  }
+
+  // 自定义图标或点状的特殊处理下，不需要圆圈和背景色了，直接图标颜色来表示状态
+  &-dot, &-custom {
+    .@{step-prefix}-head {
+      border: none;
+      background: none !important;
+      .@{step-prefix}-head-icon {
+        font-size: @step-custom-icon-width;
+      }
+    }   
+  }
+
+  // 以下是不同状态的不同展示（以上是默认wait的样式）
+  &-finish {
+    .@{step-prefix}-title:after, .@{step-prefix}-tail:after {
+
+      // 已完成后面的线要高亮
+      background: @primary-color !important;
+    }
+
+    // 已完成的副标题和描述就不再高亮了
+    .@{step-prefix}-title .@{step-prefix}-subtitle{
+      color: @grey;
+    }
+  }
+  &-process {
+    .@{step-prefix}-head {
+      background: @primary-color;
+      &-text {
+        color: @white;
+      }
+      &-dot {
+        position: relative;
+        top: @step-dot-active-offset;
+        width: @step-dot-width-active !important;
+        height: @step-dot-width-active !important;
+      }
+    }
+    .@{step-prefix}-description  {
+      color: @text-color;
+    }
+  }
+  &-finish, &-process {
+    .@{step-prefix}-head {
+      border-color: @primary-color;
+      &-icon {
+        color: @primary-color;
+      }
+      &-dot {
+        background: @primary-color !important;
+      }
+    }
+    .@{step-prefix}-title {
+      color: @text-color;
+    }
+  }
+  &-error {
+    .@{step-prefix}-head {
+      border-color: @red;
+      background: none;
+      &-icon {
+        color: @red;
+      }
+    }
+    .@{step-prefix}-title, .@{step-prefix}-description {
+      color: @red;
+    }
+  } 
+}
+
+// 一些状态组合后的样式
+.@{step-prefix}-vertical.@{step-prefix}-dot {
+  .@{step-prefix}-head {
+    float: left;
+    width: auto;
+    margin-top: @step-dot-vertical-gutter;
+  }
+  .@{step-prefix}-content {
+    margin-left: (@margin-md + @step-dot-width);
+  }
+}
+.@{step-prefix}-vertical.@{step-prefix}-dot:not(:last-child) {
+  .@{step-prefix}-tail {
+    top: @step-dot-width;
+    left: (@step-dot-width / 2 - @step-dot-tail-width / 2);
+    width: @step-dot-tail-width !important;
+    padding: (@step-dot-vertical-gutter + @spacing-gutter) 0 @spacing-gutter !important; 
+  }
+}
+.@{step-prefix}-vertical.@{step-prefix}-dot.@{step-prefix}-process {
+  .@{step-prefix}-head {
+    // 激活点的圆圈比一般的大了2个px，向左移动1px是
+    &-dot {
+      left: @step-dot-active-offset;
+    }
+  }
+}
+.@{step-prefix}-small.@{step-prefix}-custom {
+  .@{step-prefix}-head {
+      .@{step-prefix}-head-icon {
+        font-size: @step-custom-icon-width-small;
+      }
+    }  
+}
+.@{step-prefix}-small.@{step-prefix}-vertical {  
+  &:not(:last-child) {
+    .@{step-prefix}-tail {
+      left: (@height-sm / 2);
+      padding: (@height-sm + @spacing-gutter) 0 (@spacing-gutter) !important;
+    }
+  }
+}
+.@{step-prefix}-small.@{step-prefix}-vertical-placement {
+  &:not(:last-child) {
+    .@{step-prefix}-tail {
+      top: (@height-sm / 2);
+      padding-left: (@height-sm + @margin-md * 2);
+    }
+  }
+}
+.@{step-prefix}-vertical-placement.@{step-prefix}-dot {
+  .ix-step-head {
+    margin: 0;
+  }
+}
+
+@import './vertical.less';
+@import './label-placement.less';
+@import './dot.less';
+@import './percent-circle.less';
+@import './small.less';

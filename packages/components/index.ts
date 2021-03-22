@@ -28,6 +28,7 @@ import { IxSpin } from './spin'
 // Other
 import { IxBackTop } from './back-top'
 // --- import end ---
+import { IxSteps, IxStep } from './steps'
 
 const components = [
   // General
@@ -60,6 +61,8 @@ const components = [
   IxSpin,
   // Other
   IxBackTop,
+  IxStep,
+  IxSteps,
   // --- components end ---
 ]
 
@@ -127,4 +130,5 @@ export {
   // Other
   IxBackTop,
   // --- export end ---
+  IxSteps,
 }

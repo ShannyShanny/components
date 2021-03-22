@@ -1,0 +1,38 @@
+.@{step-prefix} {      
+    &-vertical-placement {
+      position: relative;
+      overflow: visible;
+      padding-left: 0 !important;
+      &:last-child {
+  
+        // 点状不是所有节点等比分布，所以最后一个flex的设置去掉
+        flex: none;
+      }
+      &:not(:last-child) {
+        .@{step-prefix}-tail {
+          position: absolute;
+          top: (@height-md / 2);
+          height: @step-tail-height;
+          width: 100%;
+          padding-left: (@height-md + @margin-md * 2);
+          &:after {
+            display: inline-block;
+            vertical-align: top;
+            width: 100%;
+            height: @step-tail-height;
+            background: @grey;
+            content: "";
+          }
+        }
+      }
+      .@{step-prefix}-head { 
+        margin: 0 @margin-md;
+      }
+      .@{step-prefix}-content {
+         display: block;
+        .@{step-prefix}-title:after {
+          display: none !important;
+        }
+      }
+    }
+}
