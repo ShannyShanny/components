@@ -27,7 +27,7 @@ import { IxResult } from './result'
 import { IxSpin } from './spin'
 // Other
 import { IxBackTop } from './back-top'
-// --- import end ---
+import { IxStep, IxSteps } from './steps'
 
 const components = [
   // General
@@ -60,7 +60,8 @@ const components = [
   IxSpin,
   // Other
   IxBackTop,
-  // --- components end ---
+  IxStep,
+  IxSteps
 ]
 
 const directives: Record<string, Directive> = {
@@ -126,5 +127,7 @@ export {
   IxSpin,
   // Other
   IxBackTop,
+  IxStep, 
+  IxSteps
   // --- export end ---
 }
