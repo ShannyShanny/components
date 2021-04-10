@@ -1,11 +1,11 @@
 import { series, task } from 'gulp'
 
-import './tasks/clean'
-import './tasks/site'
-import './tasks/icons'
+import { buildCdk, buildComponents, buildDeclaration, buildStyle, buildVersion } from './build'
+import { iconsGenerate } from './icons'
+import { siteStart, siteBuild } from './site'
 
-task('start:dev', series('icons:copy', 'site:start'))
+task('start', series(siteStart))
 
-task('start:icons', series('clean:icons', 'icons:start'))
+task('build', series(buildCdk, buildComponents, buildDeclaration, buildStyle, buildVersion, siteBuild))
 
-task('build', series('icons:copy', 'site:build'))
+task('icons', iconsGenerate)

@@ -4,7 +4,7 @@ export function getLessTemplate(compName: string): string {
 @${compName}-prefix: ~'@{idux-prefix}-${compName}';
 
 .@{${compName}-prefix} {
-  
+
 }
 `
 }
@@ -12,12 +12,34 @@ export function getLessTemplate(compName: string): string {
 export function getTypesTemplate(compName: string): string {
   return `import type { DefineComponent } from 'vue'
 
-interface ${compName}OriginalProps {
+import { PropTypes } from '@idux/cdk/utils'
+
+export interface ${compName}Props {
+  testProp: string
 }
 
-export type ${compName}Props = Readonly<${compName}OriginalProps>
+export const ${compName}PropTypes = {
+  testProp: PropTypes.string,
+}
 
 export type ${compName}Component = InstanceType<DefineComponent<${compName}Props>>
+`
+}
+
+export function getTsxTemplate(compName: string): string {
+  return `import type { ${compName}Props } from './types'
+
+import { defineComponent } from 'vue'
+import { ${compName}PropTypes } from './types'
+
+export default defineComponent({
+  name: 'Ix${compName}',
+  props: ${compName}PropTypes,
+  emits: [],
+  setup(props: ${compName}Props) {
+
+  }
+})
 `
 }
 
@@ -26,14 +48,17 @@ export function getVueTemplate(compName: string): string {
   <div></div>
 </template>
 <script lang="ts">
+import type { ${compName}Props } from './types'
+
 import { defineComponent } from 'vue'
-import { ${compName}Props } from './types'
+import { ${compName}PropTypes } from './types'
 
 export default defineComponent({
   name: 'Ix${compName}',
-  props: {},
-  setup(props:${compName}Props) {
-    // init
+  props: ${compName}PropTypes,
+  emits: [],
+  setup(props: ${compName}Props) {
+    
   },
 })
 </script>
@@ -41,34 +66,31 @@ export default defineComponent({
 }
 
 export function getIndexTemplate(compName: string): string {
-  return `import { installComponent } from '@idux/components/core/utils'
+  return `import type { App } from 'vue'
+
 import Ix${compName} from './src/${compName}.vue'
 
-Ix${compName}.install = installComponent(Ix${compName})
+Ix${compName}.install = (app: App): void => {
+  app.component(Ix${compName}.name, Ix${compName})
+}
 
 export { Ix${compName} }
-export * from './src/types'
+
+export type { ${compName}Component, ${compName}Props } from './src/types'
 `
 }
 
 export function getTestTemplate(compName: string): string {
   return `import { mount, MountingOptions, VueWrapper } from '@vue/test-utils'
-import { DefineComponent } from 'vue'
 import { renderWork } from '@tests'
 import Ix${compName} from '../src/${compName}.vue'
 import { ${compName}Props } from '../src/types'
 
 describe('${compName}.vue', () => {
-  let ${compName}Mount: (
-    options?: MountingOptions<Partial<${compName}Props>>,
-  ) => VueWrapper<InstanceType<DefineComponent<${compName}Props>>>
+  let ${compName}Mount: (options?: MountingOptions<Partial<${compName}Props>>) => VueWrapper<InstanceType<typeof Ix${compName}>>
 
   beforeEach(() => {
-    ${compName}Mount = (options = {}) => {
-      return mount<${compName}Props>(Ix${compName}, {
-        ...options,
-      })
-    }
+    ${compName}Mount = options => mount(Ix${compName}, { ...options })
   })
 
   renderWork(Ix${compName})
@@ -96,10 +118,17 @@ describe('use${compName}.ts', () => {
 `
 }
 
-export function getDocsZhTemplate(compName: string, moduleName: string, upperFirstName: string, isEn = false): string {
+export function getDocsZhTemplate(
+  compName: string,
+  moduleName: string,
+  upperFirstName: string,
+  type = '',
+  isEn = false,
+): string {
+  const [enType, zhType] = type.split('_')
   return `---
 category: ${moduleName}
-type:
+type: ${isEn ? enType ?? '' : zhType}
 title: ${upperFirstName}
 subtitle:
 order: 0
@@ -139,7 +168,7 @@ ${isEn ? '| Name | Description | Parameter Type | Remark |' : '| 名称 | 说明
 `
 }
 
-export function getDomeTemplate(): string {
+export function getDemoTemplate(): string {
   return `---
 title:
   zh: 基本使用
@@ -149,18 +178,20 @@ order: 0
 
 ## zh
 
-
+最简单的用法。
 
 ## en
 
+The simplest usage.
 
 `
 }
 
-export function getDomeVueTemplate(compName: string): string {
+export function getDemoVueTemplate(compName: string): string {
   return `<template>
   <ix-${compName} />
 </template>
+
 <script lang="ts">
 import { defineComponent } from 'vue'
 
@@ -170,6 +201,7 @@ export default defineComponent({
   }
 })
 </script>
+
 <style lang="less" scoped>
 </style>
 `
