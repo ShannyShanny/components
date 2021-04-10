@@ -1,0 +1,9 @@
+.message-icon-color (@baseCls, @type, @color) {
+  &.@{baseCls}-@{type} {
+    .@{baseCls}-custom-content {
+      .ix-icon {
+        color: @color;
+      }
+    }
+  }
+}

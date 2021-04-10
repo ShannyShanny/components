@@ -1,20 +1,25 @@
 import type { App, Directive } from 'vue'
 
-// General
+import { version } from './version'
+
+// import General
 import { IxButton, IxButtonGroup } from './button'
 import { IxIcon } from './icon'
 import { IxTitle } from './title'
 import { IxTypography } from './typography'
-// Layout
+// import Layout
 import { IxDivider } from './divider'
 import { IxSpace } from './space'
-// Navigation
+import { IxRow, IxCol } from './grid'
+// import Navigation
 import { IxAffix } from './affix'
-// Data Entry
+// import Data Entry
 import { IxCheckbox, IxCheckboxGroup } from './checkbox'
 import { IxInput, IxTextarea } from './input'
+import { IxRadio, IxRadioButton, IxRadioGroup } from './radio'
 import { IxRate } from './rate'
-// Data Display
+import { IxSwitch } from './switch'
+// import Data Display
 import { IxBadge } from './badge'
 import { IxCard } from './card'
 import { IxEmpty } from './empty'
@@ -22,31 +27,39 @@ import { IxImage } from './image'
 import { IxStatistic } from './statistic'
 import { IxTimeline, IxTimelineItem } from './timeline'
 import { IxTooltip } from './tooltip'
-// Feedback
+import { IxPopover } from './popover'
+// import Feedback
 import { IxResult } from './result'
 import { IxSpin } from './spin'
-// Other
+import { IxProgress } from './progress'
+// import Other
 import { IxBackTop } from './back-top'
 import { IxStep, IxSteps } from './steps'
 
 const components = [
-  // General
+  // components General
   IxButton,
   IxButtonGroup,
   IxIcon,
   IxTitle,
-  // Layout
+  // components Layout
   IxDivider,
   IxSpace,
-  // Navigation
+  IxRow,
+  IxCol,
+  // components Navigation
   IxAffix,
-  // Data Entry
+  // components Data Entry
   IxCheckbox,
   IxCheckboxGroup,
   IxInput,
   IxTextarea,
+  IxRadio,
+  IxRadioButton,
+  IxRadioGroup,
   IxRate,
-  // Data Display
+  IxSwitch,
+  // components Data Display
   IxBadge,
   IxCard,
   IxEmpty,
@@ -55,24 +68,26 @@ const components = [
   IxTimeline,
   IxTimelineItem,
   IxTooltip,
-  // Feedback
+  IxPopover,
+  // components Feedback
   IxResult,
   IxSpin,
-  // Other
+  IxProgress,
+  // components Other
   IxBackTop,
   IxStep,
   IxSteps
 ]
 
 const directives: Record<string, Directive> = {
-  // General
+  // directives General
   typography: IxTypography,
-  // Layout
-  // Navigation
-  // Data Entry
-  // Data Display
-  // Feedback
-  // Other
+  // directives Layout
+  // directives Navigation
+  // directives Data Entry
+  // directives Data Display
+  // directives Feedback
+  // directives Other
   // --- directives end ---
 }
 
@@ -85,8 +100,6 @@ const install = (app: App): void => {
     app.directive(key, directives[key])
   })
 }
-
-const version = '0.0.0'
 
 export default {
   install,

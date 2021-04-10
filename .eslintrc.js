@@ -76,4 +76,5 @@ module.exports = {
     'vue/require-default-prop': 'error',
     'vue/require-explicit-emits': 'error',
   },
+  ignorePatterns: ['dist', 'packages/site/src/router.ts', 'packages/site/src/sideNav.ts'],
 }
