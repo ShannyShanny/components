@@ -1,6 +1,7 @@
 import type {
   ButtonConfig,
   IconConfig,
+  TagConfig,
   DividerConfig,
   SpaceConfig,
   RowConfig,
@@ -9,6 +10,7 @@ import type {
   RateConfig,
   BadgeConfig,
   CardConfig,
+  CollapseConfig,
   ImageConfig,
   StatisticConfig,
   MessageConfig,
@@ -16,10 +18,14 @@ import type {
   SpinConfig,
   ProgressConfig,
   BackTopConfig,
+  AnchorConfig,
   GlobalConfig,
   TooltipConfig,
   PopoverConfig,
+  SelectConfig,
   RadioGroupConfig,
+  MenuConfig,
+  SubMenuConfig,
 } from './types'
 
 import { shallowReactive } from 'vue'
@@ -29,6 +35,12 @@ import { numFormatter } from './numFormatter'
 const button = shallowReactive<ButtonConfig>({ mode: 'default', size: 'medium' })
 
 const icon = shallowReactive<IconConfig>({})
+
+const tag = shallowReactive<TagConfig>({
+  closable: false,
+  checkAble: false,
+  isRound: false,
+})
 
 // --------------------- Layout ---------------------
 const divider = shallowReactive<DividerConfig>({
@@ -43,6 +55,15 @@ const space = shallowReactive<SpaceConfig>({ size: 'small' })
 const row = shallowReactive<RowConfig>({ wrap: true })
 
 // --------------------- Navigation ---------------------
+const menu = shallowReactive<MenuConfig>({
+  indent: 24,
+  theme: 'light',
+})
+
+const subMenu = shallowReactive<SubMenuConfig>({
+  suffix: 'right',
+  suffixRotates: [-90, 90],
+})
 
 // --------------------- Data Entry ---------------------
 const input = shallowReactive<InputConfig>({
@@ -71,6 +92,15 @@ const radioGroup: RadioGroupConfig = shallowReactive({
   mode: 'border',
 })
 
+const select = shallowReactive<SelectConfig>({
+  borderless: false,
+  clearable: false,
+  labelKey: 'label',
+  searchable: false,
+  size: 'medium',
+  valueKey: 'value',
+})
+
 // --------------------- Data Display ---------------------
 const badge = shallowReactive<BadgeConfig>({ showZero: false, dot: false, overflowCount: 99 })
 
@@ -79,6 +109,8 @@ const card = shallowReactive<CardConfig>({
   borderless: false,
   hoverable: false,
 })
+
+const collapse: CollapseConfig = shallowReactive<CollapseConfig>({ accordion: false })
 
 const image: ImageConfig = shallowReactive({
   width: 100,
@@ -137,26 +169,33 @@ const backTop = shallowReactive<BackTopConfig>({
   duration: 450,
   visibilityHeight: 400,
 })
-
+const anchor = shallowReactive<AnchorConfig>({
+  showInkInFixed: false,
+})
 // --------------------- end ---------------------
 
 export const defaultConfig: GlobalConfig = {
   // General
   button,
   icon,
+  tag,
   // Layout
   divider,
   space,
   row,
   // Navigation
+  menu,
+  subMenu,
   // Data Entry
   input,
   textarea,
   rate,
   radioGroup,
+  select,
   // Data Display
   badge,
   card,
+  collapse,
   image,
   statistic,
   tooltip,
@@ -168,5 +207,6 @@ export const defaultConfig: GlobalConfig = {
   progress,
   // Other
   backTop,
+  anchor,
   // --- end ---
 }
